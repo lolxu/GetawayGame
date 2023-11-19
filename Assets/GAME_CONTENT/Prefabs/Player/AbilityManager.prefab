@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1047600720003954164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5689668700280533447}
+  - component: {fileID: 7616303908315442202}
+  m_Layer: 0
+  m_Name: AbilityManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5689668700280533447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047600720003954164}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -206.87564, y: 22.060726, z: 247.13937}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7616303908315442202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1047600720003954164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fac299d953721649b892c3b11e7d872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_abilityPool:
+  - m_tier: 0
+    m_ability:
+      m_abilityName: Hand Gun
+      m_abilityDescription: It's dangerous to go alone, here is gun
+      m_abilityType: 0
+      activated: 0
+  - m_tier: 1
+    m_ability:
+      m_abilityName: Shotgun
+      m_abilityDescription: Now, we are talking
+      m_abilityType: 0
+      activated: 0
+  - m_tier: 2
+    m_ability:
+      m_abilityName: HE Round
+      m_abilityDescription: I'm a tank bruh
+      m_abilityType: 0
+      activated: 0
+  - m_tier: 2
+    m_ability:
+      m_abilityName: Side Kick
+      m_abilityDescription: I help you shoot things
+      m_abilityType: 2
+      activated: 0
+  - m_tier: 2
+    m_ability:
+      m_abilityName: Mines
+      m_abilityDescription: Ur side kick has mines now...
+      m_abilityType: 2
+      activated: 0
+  - m_tier: 0
+    m_ability:
+      m_abilityName: HP+
+      m_abilityDescription: Get 1 more HP
+      m_abilityType: 3
+      activated: 0
+  - m_tier: 0
+    m_ability:
+      m_abilityName: Heal
+      m_abilityDescription: Heals 1 HP
+      m_abilityType: 3
+      activated: 0
+  - m_tier: 1
+    m_ability:
+      m_abilityName: Heal+
+      m_abilityDescription: Heals 2 HP
+      m_abilityType: 3
+      activated: 0
+  - m_tier: 2
+    m_ability:
+      m_abilityName: Heal++
+      m_abilityDescription: Heals all HP
+      m_abilityType: 3
+      activated: 0
+  - m_tier: 0
+    m_ability:
+      m_abilityName: Speed+
+      m_abilityDescription: Goes a bit faster
+      m_abilityType: 3
+      activated: 0
+  - m_tier: 0
+    m_ability:
+      m_abilityName: Bullet
+      m_abilityDescription: Gives you a small amount of bullets
+      m_abilityType: 3
+      activated: 0
+  m_player: {fileID: 0}
