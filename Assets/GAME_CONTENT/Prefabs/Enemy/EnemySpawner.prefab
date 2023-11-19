@@ -47,7 +47,7 @@ MonoBehaviour:
   m_enemyTypes:
   - {fileID: 6505204806933380558, guid: 54624e46931dcfc46826126953341197, type: 3}
   - {fileID: 446354617909468925, guid: c993f47512b818e45aecdf5881d4d8c3, type: 3}
-  m_spawnRadius: 150
-  m_maxOnScreen: 25
+  m_spawnRadius: 70
+  m_maxOnScreen: 30
   m_maxSpawnNum: 5
   m_currEnemyNum: 0

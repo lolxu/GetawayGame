@@ -44,11 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 408e853b7f26486e81f796e7fd919f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_player: {fileID: 2212991370132002335, guid: e1df1d29168dccf4d9154bf9c4d8c7ca,
+    type: 3}
   m_slowDownFactor: 0.25
   m_slowDownLength: 0.75
   m_launchForce: 60
   m_bulletPrefab: {fileID: 2076006376369464168, guid: d7048f5f6e2671840ad7dc5a2a22dc3e,
     type: 3}
-  m_bulletCount: 0
+  m_pelletCount: 3
+  m_maxBulletCount: 10
   m_bulletAngleOffset: 5
   m_slideStopVelocity: 8
+  m_sideKickRadius: 50
+  m_sideKickAttackTimeout: 2

@@ -105,7 +105,7 @@ namespace GAME_CONTENT.Scripts
         {
             if (!isInvulnerable)
             {
-                camShake.StartCoroutine(camShake.CamShake(2.5f, 0.2f));
+                camShake.StartCoroutine(camShake.CamShake(5.5f, 0.2f));
                 m_HP -= amount;
                 if (m_HP == 1)
                 {
@@ -117,7 +117,7 @@ namespace GAME_CONTENT.Scripts
                     StartCoroutine(DeathSequence(transform.position));
                 }
             
-                UIManager.Instance.ChangeHP(m_HP);
+                GameManager.Instance.ChangeHP(m_HP);
             }
         }
 
@@ -129,7 +129,7 @@ namespace GAME_CONTENT.Scripts
             {
                 m_engineSmoke.GetComponent<ParticleSystem>().Stop();
             }
-            UIManager.Instance.ChangeHP(m_HP);
+            GameManager.Instance.ChangeHP(m_HP);
         }
 
         public void AddMaxHP(int amount)

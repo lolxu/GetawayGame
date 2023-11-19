@@ -156,6 +156,7 @@ public class AbilityManager : MonoBehaviour
             switch (abilityName)
             {
                 case "Side Kick":
+                    PlayerController.Instance.ActivateSideKick();
                     break;
                 case "Mines":
                     break;
@@ -179,6 +180,12 @@ public class AbilityManager : MonoBehaviour
                     break;
                 case "Speed+":
                     m_player.AddSpeed(Random.Range(1.0f, 5.0f));
+                    break;
+                case "Bullet":
+                    PlayerController.Instance.AddBullets(Random.Range(3, 7));
+                    break;
+                case "Pouch":
+                    PlayerController.Instance.AddMaxBulletCount(1);
                     break;
             }
         }

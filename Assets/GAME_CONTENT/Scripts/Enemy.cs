@@ -19,12 +19,15 @@ namespace GAME_CONTENT.Scripts
         [SerializeField] private Material m_hurtMaterial;
         [SerializeField] private Collider m_bodyCollider;
         [SerializeField] private int m_hp = 1;
+        [SerializeField] private float m_waitToDestroyTimer = 3.0f;
 
         private GameObject m_player;
         private Rigidbody m_rb;
         private Vector3 m_direction;
         private bool canMove = true;
         private bool isDead = false;
+        private bool isHurtDone = true;
+        private float flippedTimer = 0.0f;
         
         private CinemachineShake camShake;
         
@@ -49,15 +52,24 @@ namespace GAME_CONTENT.Scripts
 
         private void FixedUpdate()
         {
-            isGrounded = Physics.Raycast(transform.position, Vector3.down, 2.5f);
+            isGrounded = Physics.Raycast(transform.position, Vector3.down, 0.5f);
             if (isGrounded && canMove && !isDead)
             {
+                flippedTimer = 0.0f;
                 FaceTarget();
                 Move();
             }
             else if (!isGrounded)
             {
-                // DeathSeqeuence(transform.position, Vector3.zero);
+                flippedTimer += Time.deltaTime;
+            }
+
+            if (flippedTimer >= m_waitToDestroyTimer)
+            {
+                if (!isDead)
+                {
+                    DeathSeqeuence(transform.position, Vector3.zero);
+                }
             }
         }
 
@@ -85,8 +97,13 @@ namespace GAME_CONTENT.Scripts
             contactPos.y = 0.0f;
             if (!isDead)
             {
-                camShake.StartCoroutine(camShake.CamShake(2.5f, 0.2f));
-                StartCoroutine(HurtSequence(0.2f));
+                camShake.StartCoroutine(camShake.CamShake(3.5f, 0.2f));
+                if (isHurtDone)
+                {
+                    isHurtDone = false;
+                    StartCoroutine(HurtSequence(0.1f));
+                }
+                
                 m_hp--;
                 if (m_hp <= 0)
                 {
@@ -106,37 +123,20 @@ namespace GAME_CONTENT.Scripts
             
             EnemyManager.Instance.DestroyedCop();
             Destroy(gameObject);
-
-            /*var mats = m_renderer.materials;
-            for (int i = 0; i < mats.Length; i++)
-            {
-                mats[i] = m_explodeMaterial;
-            }
-            m_renderer.materials = mats;*/
-                
-            /*m_rb.AddExplosionForce(1500.0f, hitPos, 0.5f);
-            m_rb.AddForce(direction * 1.5f, ForceMode.Impulse);
-            m_rb.AddForce(Vector3.up * 100.0f, ForceMode.Impulse);*/
-            
-            /*yield return new WaitForSeconds(0.75f);
-            
-            transform.DOScale(Vector3.zero, 0.25f)
-                .SetEase(Ease.InOutSine)
-                .OnComplete(() =>
-                {
-                    EnemyManager.Instance.DestroyedCop();
-                    Destroy(gameObject);
-                });*/
         }
 
         private void OnCollisionEnter(Collision other)
         {
             if (other.relativeVelocity.magnitude > 20.0f)
             {
-                if (other.gameObject.CompareTag("Obstacle") && !isDead)
+                if (other.gameObject.CompareTag("Obstacle") && !isDead && other.relativeVelocity.magnitude > 50.0f)
                 {
                     m_hp--;
-                    StartCoroutine(HurtSequence(0.2f));
+                    if (isHurtDone)
+                    {
+                        isHurtDone = false;
+                        StartCoroutine(HurtSequence(0.1f));
+                    }
                     if (m_hp <= 0)
                     {
                         DeathSeqeuence(other.contacts[0].point, other.relativeVelocity);
@@ -145,7 +145,11 @@ namespace GAME_CONTENT.Scripts
                 else if (other.gameObject.CompareTag("Player") && !isDead)
                 {
                     other.gameObject.GetComponent<Player>().Damage(1);
-                    StartCoroutine(HurtSequence(0.2f));
+                    if (isHurtDone)
+                    {
+                        isHurtDone = false;
+                        StartCoroutine(HurtSequence(0.1f));
+                    }
                     m_hp--;
                     if (m_hp <= 0)
                     {
@@ -168,6 +172,7 @@ namespace GAME_CONTENT.Scripts
             yield return new WaitForSeconds(duration);
             
             m_renderer.materials = orgMaterials;
+            isHurtDone = true;
         }
 
         // TODO damage code move to here

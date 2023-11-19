@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
+using Color = UnityEngine.Color;
 
 namespace GAME_CONTENT.Scripts
 {
@@ -13,6 +14,9 @@ namespace GAME_CONTENT.Scripts
     {
 
         public static PlayerController Instance;
+
+        [Header("Core Settings")]
+        [SerializeField] private GameObject m_player;
         
         [Header("Slow motion settings")] public float m_slowDownFactor = 0.05f;
         public float m_slowDownLength = 0.75f;
@@ -24,16 +28,21 @@ namespace GAME_CONTENT.Scripts
         [SerializeField] private float m_bulletAngleOffset = 5.0f;
         [SerializeField] private float m_slideStopVelocity = 8.0f;
 
+        [Header("Certain ability settings")] 
+        [SerializeField] private float m_sideKickRadius = 100.0f;
+        [SerializeField] private float m_sideKickAttackTimeout = 2.0f;
+
         private bool isInSlowMotion = false;
         private bool hasShotProjectile = false;
         private bool coroutineFinished = true;
-        private bool isSlamActive = false;
+        private bool isSideKickActive = false;
         private int m_bulletCount = 0;
+        
+        // Deprecated Ability
+        private bool iSlamActive = false;
 
         private Ray m_pressRay;
         private Ray m_releaseRay;
-
-        private GameObject m_player;
         private int m_layerMask;
         
         private Matrix4x4 matrix;
@@ -87,17 +96,17 @@ namespace GAME_CONTENT.Scripts
             {
                 if (hasShotProjectile && m_player)
                 {
-                    if (isSlamActive)
+                    /*if (isSlamActive)
                     {
                         m_player.GetComponent<Player>().SetIsInvulnerable(true);
-                    }
+                    }*/
                     
                     coroutineFinished = false;
                     StartCoroutine(ShootProjectile());
                 }
                 
                 // Slow motion recover
-                if (!UIManager.Instance.isGamePaused)
+                if (!GameManager.Instance.isGamePaused)
                 {
                     Time.timeScale += (1.0f / m_slowDownLength) * Time.unscaledDeltaTime;
                     Time.timeScale = Mathf.Clamp(Time.timeScale, 0.0f, 1.0f);
@@ -116,10 +125,10 @@ namespace GAME_CONTENT.Scripts
                 if (m_player.GetComponent<Rigidbody>().velocity.magnitude < m_slideStopVelocity 
                     && !m_player.GetComponent<NavMeshAgent>().enabled && coroutineFinished)
                 {
-                    if (isSlamActive)
+                    /*if (isSlamActive)
                     {
                         m_player.GetComponent<Player>().SetIsInvulnerable(false);
-                    }
+                    }*/
                     
                     m_player.GetComponent<Rigidbody>().isKinematic = true;
                     m_player.GetComponent<NavMeshAgent>().enabled = true;
@@ -153,7 +162,7 @@ namespace GAME_CONTENT.Scripts
 
                 if (m_bulletCount > 0)
                 {
-                    ChangeBulletNums(-1);
+                    AddBullets(-1);
                     
                     List<GameObject> bullets = new List<GameObject>();
 
@@ -229,14 +238,19 @@ namespace GAME_CONTENT.Scripts
         public void SetPelletCount(int num)
         {
             m_pelletCount = num;
-            ChangeBulletNums(10);
+            AddBullets(10);
         }
 
-        public void ChangeBulletNums(int num)
+        public void AddBullets(int num)
         {
             m_bulletCount += num;
             m_bulletCount = Mathf.Clamp(m_bulletCount, 0, m_maxBulletCount);
-            UIManager.Instance.ChangeBulletNum(m_bulletCount);
+            GameManager.Instance.ChangeBulletNum(m_bulletCount);
+        }
+
+        public void AddMaxBulletCount(int num)
+        {
+            m_maxBulletCount++;
         }
 
         public void SetBulletType(string type)
@@ -244,9 +258,70 @@ namespace GAME_CONTENT.Scripts
             
         }
 
+        public void ActivateSideKick()
+        {
+            if (!isSideKickActive)
+            {
+                isSideKickActive = true;
+                StartCoroutine(SideKick());
+            }
+        }
+
+        IEnumerator SideKick()
+        {
+            while (isSideKickActive)
+            {
+                if (m_player)
+                {
+                    var playerPos = m_player.transform.position;
+
+                    // Find nearest target
+                    Collider[] cols = Physics.OverlapSphere(playerPos, m_sideKickRadius);
+                    if (cols.Length > 0)
+                    {
+                        float minDist = 100000.0f;
+                        GameObject target = null;
+                        foreach (var col in cols)
+                        {
+                            if (col.CompareTag("Enemy"))
+                            {
+                                GameObject enemy = col.gameObject;
+                                float enemyDist = Vector3.Distance(m_player.transform.position,
+                                    enemy.transform.position);
+                                if (enemyDist < minDist)
+                                {
+                                    minDist = enemyDist;
+                                    target = enemy;
+                                }
+                            }
+                        }
+
+                        if (target != null)
+                        {
+                            // Debug.Log(target);
+                            Vector3 currentSpawnDirection = (target.transform.position - playerPos).normalized;
+                            // Debug.Log(currentSpawnDirection);
+                            GameObject bullet = Instantiate(m_bulletPrefab,
+                                playerPos + new Vector3(0.0f, 1.0f, 0.0f), Quaternion.identity);
+                            bullet.transform.GetComponent<Rigidbody>()
+                                .AddForce(currentSpawnDirection.normalized * 30000.0f);
+                        }
+                    }
+
+                    yield return new WaitForSeconds(m_sideKickAttackTimeout);
+                }
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(m_player.transform.position, m_sideKickRadius);
+        }
+
         public void SetSlamActive()
         {
-            isSlamActive = true;
+            // Nothing here lol too powerful
         }
     }
 }

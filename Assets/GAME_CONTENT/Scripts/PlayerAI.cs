@@ -28,11 +28,11 @@ namespace GAME_CONTENT.Scripts
             {
                 m_goalsReached++;
                 
-                UIManager.Instance.ChangeCheckpointNum(1);
+                GameManager.Instance.ChangeCheckpointNum(1);
                 
                 if (m_goalsReached % 3 == 0)
                 {
-                    UIManager.Instance.ShowAbilities();
+                    GameManager.Instance.ShowAbilities();
                 }
                 GenerateGoal();
             }
