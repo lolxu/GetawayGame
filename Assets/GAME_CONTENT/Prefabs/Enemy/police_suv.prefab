@@ -95,7 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 971112328058176583}
   - component: {fileID: 5387384795235605328}
-  - component: {fileID: 3061144038203423913}
+  - component: {fileID: 8838956527868043410}
   m_Layer: 6
   m_Name: police_suv
   m_TagString: Enemy
@@ -136,8 +136,8 @@ Rigidbody:
   m_GameObject: {fileID: 446354617909468925}
   serializedVersion: 4
   m_Mass: 8
-  m_Drag: 0.05
-  m_AngularDrag: 0.05
+  m_Drag: 0.3
+  m_AngularDrag: 1.15
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -154,7 +154,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &3061144038203423913
+--- !u!114 &8838956527868043410
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,10 +163,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 446354617909468925}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c36a59a80f53cf45a924504215dec2a, type: 3}
+  m_Script: {fileID: 11500000, guid: b6ba3cc04c454cb9b44bd62347f90fd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_acceleration: 180
+  m_acceleration: 200
   m_deacceleration: 5
   m_turnSpeed: 8
   m_maxSpeed: 40
@@ -175,8 +175,15 @@ MonoBehaviour:
   m_renderer: {fileID: 9202197960931383568}
   m_hurtMaterial: {fileID: 2100000, guid: 487b3ddae43d7d14d8f12c461506eea5, type: 2}
   m_bodyCollider: {fileID: 6838133750516014032}
-  m_hp: 3
+  m_hp: 2
   m_waitToDestroyTimer: 3
+  rayCastDistance: 0.05
+  rayCastOffset: 0
+  m_enemyType: 1
+  m_attackRadius: 80
+  m_bulletPrefab: {fileID: 2076006376369464168, guid: e9ea97be973d9b546bd29318e0455072,
+    type: 3}
+  m_shootTimeout: 2
 --- !u!1 &795660989332971128
 GameObject:
   m_ObjectHideFlags: 0

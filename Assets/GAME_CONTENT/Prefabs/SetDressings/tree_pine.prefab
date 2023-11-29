@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8466901779473963924}
   - component: {fileID: -8916593331799373545}
   - component: {fileID: -6363988288304867326}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tree_pine
   m_TagString: Obstacle
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2738648568211751709}
   - component: {fileID: 1274089651588287672}
   - component: {fileID: 3912095908023187570}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: path_tilesLong
   m_TagString: Untagged
   m_Icon: {fileID: 0}

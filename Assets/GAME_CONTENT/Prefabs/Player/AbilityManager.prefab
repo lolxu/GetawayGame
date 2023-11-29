@@ -57,7 +57,7 @@ MonoBehaviour:
       m_abilityDescription: Now, we are talking
       m_abilityType: 0
       activated: 0
-  - m_tier: 2
+  - m_tier: 1
     m_ability:
       m_abilityName: HE Round
       m_abilityDescription: I'm a tank bruh
@@ -75,7 +75,7 @@ MonoBehaviour:
       m_abilityDescription: Ur side kick has mines now...
       m_abilityType: 2
       activated: 0
-  - m_tier: 0
+  - m_tier: 2
     m_ability:
       m_abilityName: HP+
       m_abilityDescription: Get 1 more HP
@@ -112,3 +112,6 @@ MonoBehaviour:
       m_abilityType: 3
       activated: 0
   m_player: {fileID: 0}
+  m_basicThreshold: 3
+  m_intermediateThreshold: 6
+  m_OPThreshold: 9

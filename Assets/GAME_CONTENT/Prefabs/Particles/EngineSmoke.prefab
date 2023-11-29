@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7664520153624820371}
   - component: {fileID: 5560081603039369470}
   - component: {fileID: 7188328252179794236}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EngineSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
